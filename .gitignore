@@ -1,4 +1,3 @@
 /.venv/
 /.idea/
-/.dataset_raw/
-/runs/
+.env
