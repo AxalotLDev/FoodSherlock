@@ -1,111 +1,128 @@
-import logging
 import os
+import logging
 from dotenv import load_dotenv
-from telegram import Update
+from telegram import Update, ReplyKeyboardMarkup, KeyboardButton
 from telegram.ext import CommandHandler, MessageHandler, filters, ContextTypes, ApplicationBuilder
 from ultralytics import YOLO
+from deep_translator import GoogleTranslator
+
+# Загрузка переменных из .env файла
+load_dotenv()
 
 # Настройка логирования
 logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     level=logging.INFO
 )
-logging.getLogger("httpx").setLevel(logging.CRITICAL)
-logging.getLogger("telegram").setLevel(logging.CRITICAL)
 logger = logging.getLogger(__name__)
 
-load_dotenv()
-
-class_translation = {
-    'drink': 'Напиток',
-    'dessert': 'Десерт',
-    'meal': 'Блюдо'
-}
+# Настройка логирования для httpx
+logging.getLogger("httpx").setLevel(logging.WARNING)
 
 
-# Функция для инференса
-def run_inference(model_path, image_path, img_size=1024, conf_threshold=0.1):
-    model = YOLO(model_path)
+def run_inference(image_path, img_size=1024, conf_threshold=0.1):
     results = model.predict(image_path, imgsz=img_size, conf=conf_threshold)
-
-    # Извлекаем класс с наибольшей вероятностью
     for result in results:
-        id = result.probs.top1
-        predicted_class = result.names[id]
-
-        # Переводим класс, если перевод существует
-        translated_class = class_translation.get(predicted_class, predicted_class)
-        return translated_class
+        idx = result.probs.top1
+        predicted = result.names[idx]
+        return predicted
+    return None
 
 
-# Команда /start
+start_markup = ReplyKeyboardMarkup(
+    [
+        [KeyboardButton("/start")],
+        [KeyboardButton("/contacts")]
+    ],
+    resize_keyboard=True
+)
+
+
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    logger.info(f"Пользователь {update.effective_user.id} вызвал команду /start")
-    await update.message.reply_text("Привет! Отправь изображение, чтобы я выполнил определил блюдо.")
+    chat_id = update.effective_chat.id
+    text = (
+        "👋 Привет! Я бот для распознавания блюд на фото.\n\n"
+        "• Отправить изображение блюда, чтобы я смог распознать его.\n"
+        "• Нажмите «/contacts», чтобы узнать, кто меня сделал."
+    )
+    await context.bot.send_message(
+        chat_id=chat_id,
+        text=text,
+        reply_markup=start_markup
+    )
 
 
-# Обработка изображений
+async def contacts(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    chat_id = update.effective_chat.id
+    creators = (
+        "👨‍💻 Авторы проекта:\n"
+        "— Абзалов Эдуард Русланович\n"
+        "— Власов Леонид Дмитриевич\n"
+        "— Дмитриенко Константин\n"
+        "— Ладыгин Никита Сергеевич"
+    )
+    await context.bot.send_message(chat_id=chat_id, text=creators)
+
+
 async def handle_image(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     if not update.message.photo:
-        await update.message.reply_text("Это не изображение. Пожалуйста, отправьте изображение.")
+        await update.message.reply_text("❗ Это не изображение. Пожалуйста, отправьте фото блюда.")
         return
 
     photo = update.message.photo[-1]
     file = await photo.get_file()
-    image_path = f"./downloads/{file.file_id}.jpg"
-
-    os.makedirs(os.path.dirname(image_path), exist_ok=True)
+    path = f"./downloads/{file.file_id}.jpg"
+    os.makedirs(os.path.dirname(path), exist_ok=True)
 
     try:
-        # Скачиваем изображение на диск
-        await file.download_to_drive(image_path)
+        await file.download_to_drive(path)
     except Exception as e:
-        logger.error(f"Ошибка при скачивании файла: {e}")
-        await update.message.reply_text("Произошла ошибка при скачивании изображения.")
+        logger.error(f"Ошибка при скачивании изображения: {e}")
+        await update.message.reply_text("❗ Ошибка при скачивании изображения.")
         return
 
-    # Выполняем инференс
-    model_path = "runs/train/yolo_classification6/weights/best.pt"
-    predicted_class = run_inference(model_path, image_path)
-
-    if predicted_class:
-        response = f"Предсказанный класс: {predicted_class}"
+    result = run_inference(path)
+    if result:
+        translated = GoogleTranslator(source='auto', target='ru').translate(result)
+        translated = translated.capitalize()
+        await update.message.reply_text(f"✅ Предсказанный класс: *{translated}*", parse_mode="Markdown")
     else:
-        response = "Ничего не найдено на изображении."
+        await update.message.reply_text("❌ Ничего не найдено на изображении.")
 
     try:
-        # Отправка ответа пользователю
-        await update.message.reply_text(response)
+        os.remove(path)
     except Exception as e:
-        logger.error(f"Ошибка при отправке сообщения: {e}")
-
-    # Удаляем изображение после обработки
-    try:
-        os.remove(image_path)
-        logger.info(f"Файл {image_path} успешно удалён.")
-    except Exception as e:
-        logger.error(f"Ошибка при удалении файла {image_path}: {e}")
+        logger.error(f"Ошибка при удалении файла: {e}")
 
 
-# Обработка текстовых сообщений
-async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    if not update.message.photo:
-        await update.message.reply_text("Это не изображение. Пожалуйста, отправьте изображение.")
-        return
+async def unknown(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    await update.message.reply_text(
+        "Неизвестная команда. Воспользуйтесь клавиатурой ниже.",
+        reply_markup=start_markup
+    )
 
 
 if __name__ == "__main__":
-    # Получение токена
     TOKEN = os.getenv("TELEGRAM_TOKEN")
+    MODEL_PATH = os.getenv("MODEL_PATH")
     if not TOKEN:
-        logger.critical("Токен Telegram не найден. Завершение работы.")
         raise ValueError("Токен Telegram не найден.")
+    if not MODEL_PATH:
+        raise ValueError("Путь для запуска модели YOLO не найден.")
 
+    # Логирование старта бота
+    logger.info("Запуск бота...")
+
+    model = YOLO(MODEL_PATH)
     app = ApplicationBuilder().token(TOKEN).read_timeout(9999).build()
 
     app.add_handler(CommandHandler("start", start))
-    app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))
+    app.add_handler(CommandHandler("contacts", contacts))
     app.add_handler(MessageHandler(filters.PHOTO, handle_image))
+    app.add_handler(MessageHandler(filters.COMMAND, unknown))
 
-    logger.info("Бот запущен!")
-    app.run_polling()
+    try:
+        app.run_polling()
+        logger.info("Бот успешно запущен и работает.")
+    except Exception as e:
+        logger.error(f"Ошибка при запуске бота: {e}")
