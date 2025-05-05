@@ -23,7 +23,7 @@ def run_inference(image_path, img_size=1024, conf_threshold=0.1):
         return predicted
     return None
 
-
+## TODO Сделать меню для кнопок
 start_markup = ReplyKeyboardMarkup(
     [
         [KeyboardButton("/start")],
@@ -78,6 +78,8 @@ async def handle_image(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
 
     result = run_inference(path)
     if result:
+        if result == "none":
+            await update.message.reply_text("❌ Ничего не найдено на изображении.")
         translated = GoogleTranslator(source='auto', target='ru').translate(result)
         translated = translated.capitalize()
         await update.message.reply_text(f"✅ Распознанное блюдо: *{translated}*", parse_mode="Markdown")
