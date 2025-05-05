@@ -6,17 +6,12 @@ from telegram.ext import CommandHandler, MessageHandler, filters, ContextTypes, 
 from ultralytics import YOLO
 from deep_translator import GoogleTranslator
 
-# Загрузка переменных из .env файла
 load_dotenv()
-
-# Настройка логирования
 logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     level=logging.INFO
 )
 logger = logging.getLogger(__name__)
-
-# Настройка логирования для httpx
 logging.getLogger("httpx").setLevel(logging.WARNING)
 
 
@@ -85,7 +80,7 @@ async def handle_image(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
     if result:
         translated = GoogleTranslator(source='auto', target='ru').translate(result)
         translated = translated.capitalize()
-        await update.message.reply_text(f"✅ Предсказанный класс: *{translated}*", parse_mode="Markdown")
+        await update.message.reply_text(f"✅ Распознанное блюдо: *{translated}*", parse_mode="Markdown")
     else:
         await update.message.reply_text("❌ Ничего не найдено на изображении.")
 
@@ -110,7 +105,6 @@ if __name__ == "__main__":
     if not MODEL_PATH:
         raise ValueError("Путь для запуска модели YOLO не найден.")
 
-    # Логирование старта бота
     logger.info("Запуск бота...")
 
     model = YOLO(MODEL_PATH)
