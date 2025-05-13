@@ -3,5 +3,6 @@
 /.idea/
 /.env
 /dataset2_raw
+/dataset3_raw
 /dataset
 /runs
