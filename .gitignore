@@ -4,5 +4,11 @@
 /.env
 /dataset2_raw
 /dataset3_raw
+/downloads
+/calories.csv
+/translateProject.csv
+yolo11x-cls.pt
+yolo11n.pt
 /dataset
 /runs
+best.pt

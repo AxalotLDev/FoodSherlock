@@ -1,0 +1,164 @@
+﻿English,Russian
+alcohol_beer,пиво
+alcohol_champagne,шампанское
+alcohol_cider,сидр
+alcohol_gin,джин
+alcohol_liqueur,ликер
+alcohol_rum,ром
+alcohol_tequila,текила
+alcohol_vodka,водка
+alcohol_whiskey,виски
+breakfast_american,завтрак американский
+breakfast_brunch,завтрак бранч
+breakfast_continental,завтрак континентальный
+breakfast_english,завтрак английский
+burger_beef,бургер говяжий
+burger_chicken,бургер куриный
+burger_fish,бургер рыбный
+burger_slider,бургер мини
+burger_vegetarian,бургер вегетарианский
+burger_сheeseburger,бургер чизбургер
+cake_carrot,торт морковный
+cake_cheesecake,торт чизкейк
+cake_chocolate,торт шоколадный
+cake_cupcake,торт капкейк
+cake_fruit,торт фруктовый
+cake_layer,торт слоёный
+cake_red_velvet,торт красный бархат
+candy_caramel,конфеты карамель
+candy_chocolate,конфеты шоколадные
+candy_gummy,конфеты желейные
+candy_hard,конфеты леденцы
+candy_licorice,конфеты солодка
+candy_lollipop,конфеты чупа-чупс
+chocolate_bar,шоколад плитка
+chocolate_dark,шоколад тёмный
+chocolate_filled,шоколад с начинкой
+chocolate_milk,шоколад молочный
+chocolate_praline,шоколад пралине
+chocolate_white,шоколад белый
+coffee_americano,кофе американо
+coffee_cappuccino,кофе капучино
+coffee_cold_brew,кофе колд брю
+coffee_espresso,кофе эспрессо
+coffee_flat_white,кофе флэт уайт
+coffee_frapper,кофе фраппе
+coffee_irish,кофе айриш
+coffee_latte,кофе латте
+coffee_macchiato,кофе макиато
+coffee_mocha,кофе мокко
+cookie_biscotti,печенье бискотти
+cookie_chocolate_chip,печенье шоколадная чипсы
+cookie_gingerbread,печенье имбирное
+cookie_macaron,печенье макарун
+cookie_oatmeal,печенье овсяное
+cookie_shortbread,печенье песочное
+dessert_custard,десерт заварной
+dessert_frozen,десерт замороженный
+dessert_mousse,десерт мусс
+dessert_pastry,десерт выпечка
+dessert_pudding,десерт пудинг
+drink_cold,напиток холодный
+drink_energy,напиток энергетик
+drink_hot,напиток горячий
+drink_milkshake,напиток молочный коктейль
+drink_sport,напиток спортивный
+ice_cream_bar,мороженое плитка
+ice_cream_cone,мороженое рожок
+ice_cream_dairy_free,мороженое без молочное
+ice_cream_gelato,мороженое джелато
+ice_cream_soft_serve,мороженое мягкое
+ice_cream_sorbet,мороженое сорбет
+juice_apple,сок яблочный
+juice_carrot,сок морковный
+juice_cranberry,сок клюквенный
+juice_grape,сок виноградный
+juice_multifruit,сок мультифрукт
+juice_orange,сок апельсиновый
+juice_pineapple,сок ананасовый
+juice_pomegranate,сок гранатовый
+juice_tomato,сок томатный
+meal_casserole,блюдо запеканка
+meal_grill,блюдо гриль
+meal_one_pot,блюдо одна кастрюля
+meal_stew,блюдо рагу
+omelet_denver,омлет денвер
+omelet_fluffy,омлет воздушный
+omelet_french,омлет французский
+omelet_frittata,омлет фриттата
+omelet_spanish,омлет испанский
+pancake_american,блины американские
+pancake_blueberry,блины черничные
+pancake_buttermilk,блины пахтаные
+pancake_crepe,блины крёп
+pancake_potato,блины картофельные
+pasta_fettuccine,паста феттучине
+pasta_lasagna,паста лазанья
+pasta_macaroni,паста макароны
+pasta_penne,паста пенне
+pasta_ravioli,паста равиоли
+pasta_spaghetti,паста спагетти
+pie_apple,пирог яблочный
+pie_cherry,пирог вишнёвый
+pie_meat,пирог мясной
+pie_pecan,пирог пекан
+pie_pumpkin,пирог тыквенный
+pie_quiche,пирог киш
+pizza_bbq,пицца барбекю
+pizza_hawaiian,пицца гавайская
+pizza_margherita,пицца маргарита
+pizza_pepperoni,пицца пепперони
+pizza_vegetarian,пицца вегетарианская
+porridge_buckwheat,каша гречневая
+porridge_corn,каша кукурузная
+porridge_oatmeal,каша овсяная
+porridge_rice,каша рисовая
+porridge_semolina,каша манная
+salad_coleslaw,салат коулслоу
+salad_fruit,салат фруктовый
+salad_grain,салат зерновой
+salad_green,салат зелёный
+salad_pasta,салат паста
+salad_protein,салат протеиновый
+sandwich_baguette,сэндвич багет
+sandwich_club,сэндвич клубный
+sandwich_grilled_cheese,сэндвич гриль сыр
+sandwich_open_face,сэндвич открытый
+sandwich_panini,сэндвич панини
+sandwich_wrap,сэндвич ролл
+smoothie_berry,смузи ягодный
+smoothie_detox,смузи детокс
+smoothie_green,смузи зелёный
+smoothie_protein,смузи протеиновый
+smoothie_tropical,смузи тропический
+smoothie_yogurt,смузи йогуртовый
+soda_cola,газировка кола
+soda_ginger,газировка имбирная
+soda_lemon-lime,газировка лимон-лайм
+soda_mineral,газировка минеральная
+soda_orange,газировка апельсиновая
+soda_seltzer,газировка сельтерская
+soda_tonic,газировка тоник
+soup_broth,суп бульон
+soup_chowder,суп чаудер
+soup_cream,суп сливочный
+soup_fish,суп рыбный
+soup_meat,суп мясной
+soup_noodle,суп лапша
+soup_vegetable,суп овощной
+sushi_gunkan,суши гункан
+sushi_maki,суши маки
+sushi_nigiri,суши нигири
+sushi_sashimi,суши сашими
+sushi_temaki,суши темаки
+sushi_uramaki,суши урамаки
+tea_black,чай чёрный
+tea_chai,чай чай
+tea_fruit,чай фруктовый
+tea_green,чай зелёный
+tea_herbal,чай травяной
+tea_iced,чай со льдом
+tea_mate,чай мате
+tea_oolong,чай улун
+tea_pu_erh,чай пуэр
+tea_white,чай белый
